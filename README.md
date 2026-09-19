@@ -4,16 +4,17 @@
 
 Встановлюємо у ваш браузер утиліту (Tampermonkey автор Jan Binio)
 
-на базі firefox : https://addons.mozilla.org/uk/firefox/addon/tampermonkey/ 
-на базі google chrome : https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=uk
-на базі opera : https://addons.opera.com/uk/extensions/details/tampermonkey-beta/ 
+Встановіть розширення **Tampermonkey** у свій браузер за офіційними посиланнями:
+* [Для Google Chrome / Chromium-браузерів](https://chromewebstore.google.com/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo?hl=uk)
+* [Для Mozilla Firefox](https://addons.mozilla.org/uk/firefox/addon/tampermonkey/)
+* [Для Opera](https://addons.opera.com/uk/extensions/details/tampermonkey-beta/)
 
-Далі заходимо в
+### Крок 2. Створення нового скрипту
+1. Натисніть на іконку **Tampermonkey** у правому верхньому кутку вашого браузера.
+2. Виберіть пункт **«Створити новий скрипт...»** (*Create a new script...*).
+3. Повністю видаліть шаблонний текст, який з'явиться в редакторі, і заміняємо на ось цей.
 
-Потім нажимаємо на Create new script 
-
-Потім після створення скрипту заміняємо стандартний скрипт на оцей 
-
+```javascript
 // ==UserScript==
 // @name         Moodle LNTU Fixer Simple
 // @namespace    http://tampermonkey.net
@@ -28,7 +29,6 @@
 (function() {
     'use strict';
 
-    // Функція, яку ви вводили в консоль (вона 100% працює)
     function fix() {
         document.documentElement.removeAttribute('class');
         document.body.removeAttribute('class');
@@ -36,16 +36,21 @@
         document.body.style = '';
     }
 
-    // Запускаємо відразу при завантаженні сторінки
     fix();
 
-    // Запускаємо повторно при БУДЬ-ЯКОМУ кліку мишкою по сайту (коли ви переходите на нову сторінку)
     document.addEventListener('click', function() {
-        setTimeout(fix, 100); // чистить класи через 0.1 сек після кліку
-        setTimeout(fix, 500); // підстраховка через 0.5 сек, якщо сторінка вантажиться довше
+        setTimeout(fix, 100); // Чистить класи через 0.1 сек після кліку
+        setTimeout(fix, 500); // Підстраховка через 0.5 сек, якщо сторінка вантажиться довше
     });
 
-    // Підстраховка при зміні адреси сайту (для AJAX переходів)
     window.addEventListener('popstate', fix);
     window.addEventListener('hashchange', fix);
 })();
+```
+## Мудл до фіксу
+
+![Мудл до фіксу](Screenshot_2026-09-19-150553.png)
+
+## Мудл після фіксу
+
+![Мудл після фіксу](Screenshot_2026-09-19-162107.png) |
